@@ -1,0 +1,33 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #021d2c;
+}
+
+.tabla {
+    width: 100%;
+    background-color: #1b6106ab;
+    table-layout: fixed;
+}
+
+.filas {
+    margin: 10px 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+}
+
+.filas td,
+.filas th {
+    width: 20%;
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+}
+
+.input {
+    width: 90%;
+}
