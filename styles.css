@@ -2,7 +2,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background: #021d2c;
+    background: #060316;
     font-family: monospace;
 }
 
@@ -23,8 +23,8 @@ span {
 
 input:focus {
     outline: none;
-    border-bottom: 3px solid #1a0940;
-    filter: brightness(200%);
+    border-bottom: 3px solid #89062b;
+    filter: brightness(150%);
     transition: filter .2s;
 }
 
@@ -59,10 +59,11 @@ input:focus {
 }
 
 .input {
-    width: calc(var(--tamanio)*3);
+    width: clamp(200px, 60dvw, 800px);
     box-sizing: border-box;
-    border-bottom: 3px solid #1a0940;
+    border-bottom: 3px solid #732796;
     filter: brightness(50%);
+    color: #67d4e5;
 }
 
 .moneda {
@@ -70,8 +71,8 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #57004d;
-    text-shadow: 0px 0px 5px #62050c;
+    color: #a12092;
+    text-shadow: 0px 0px 5px #881821;
 }
 
 .container-atajos {
@@ -92,17 +93,20 @@ input:focus {
 
 .atajo {
     padding: calc(var(--tamanio)/3.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.8rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 700;
-    background-color: #5d120a;
-    color: #056232;
-    box-shadow: 0px 0px 15px #681622;
+    background-color: #094b06;
+    color: #91b072;
+    box-shadow: 0px 0px 15px #0c410d;
     filter: brightness(90%);
     border: none;
     border-radius: 20px;
     user-select: none;
-    display: inline;
+    display: flex;
     margin: 10px 10px;
     transition: filter .3s;
 }

@@ -14,7 +14,7 @@ function resetear(num) {
     inputSol.value = solExacto;
 }
 
-for (let i = 1; i <= 10; i++) {
+for (let i = 0; i <= 10; i++) {
     const btn = document.createElement("button");
     btn.classList.add('atajo');
     btn.id = `btn${i}`;
@@ -40,7 +40,8 @@ const bolivar = () => fetch('https://ve.dolarapi.com/v1/dolares/oficial')
 const sol = () => fetch('https://v6.exchangerate-api.com/v6/916af0932b27a81eeb3ed6bd/pair/PEN/USD')
     .then(res => res.json())
     .then(data => {
-        const valor = 1 / data.conversion_rate;
+        let dato = data.conversion_rate;
+        const valor = 1 / dato;
         inputSol.value = valor;
         valorSol = valor;
     })
@@ -52,6 +53,7 @@ bolivar();
 inputDolar.addEventListener('input', (e) => {
     let bolivarExacto = valorBolivar * inputDolar.value;
     inputBolivar.value = bolivarExacto;
+    console.log(valorBolivar, bolivarExacto);
 
     let solExacto = valorSol * inputDolar.value;
     inputSol.value = solExacto;
