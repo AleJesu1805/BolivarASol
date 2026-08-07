@@ -4,14 +4,30 @@ const inputSol = document.getElementById('sol');
 
 const contenedorScroll = document.getElementById('contenedorScroll');
 
+
+function parseValor(str) {
+    if (typeof str !== 'string') str = String(str);
+    const limpio = str.trim().replace(/\./g, '').replace(',', '.');
+    const num = parseFloat(limpio);
+    return isNaN(num) ? 0 : num;
+}
+
+function formatValor(num) {
+    if (isNaN(num)) num = 0;
+    return num.toLocaleString('es-VE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
 function resetear(num) {
     inputDolar.value = num;
 
-    let bolivarExacto = valorBolivar * inputDolar.value;
-    inputBolivar.value = bolivarExacto;
+    let bolivarExacto = valorBolivar * num;
+    inputBolivar.value = formatValor(bolivarExacto);
 
-    let solExacto = valorSol * inputDolar.value;
-    inputSol.value = solExacto;
+    let solExacto = valorSol * num;
+    inputSol.value = formatValor(solExacto);
 }
 
 for (let i = 0; i <= 10; i++) {
@@ -51,26 +67,26 @@ sol();
 bolivar();
 
 inputDolar.addEventListener('input', (e) => {
-    let bolivarExacto = valorBolivar * inputDolar.value;
-    inputBolivar.value = bolivarExacto;
-    console.log(valorBolivar, bolivarExacto);
+    let bolivarExacto = valorBolivar * parseValor(inputDolar.value);
+    inputBolivar.value = formatValor(bolivarExacto);
 
-    let solExacto = valorSol * inputDolar.value;
-    inputSol.value = solExacto;
+    let solExacto = valorSol * parseValor(inputDolar.value);
+    inputSol.value = formatValor(solExacto);
 });
 
 inputBolivar.addEventListener('input', (e) => {
-    let dolarExacto = inputBolivar.value / valorBolivar;
-    inputDolar.value = dolarExacto;
+    let dolarExacto = parseValor(inputBolivar.value) / valorBolivar;
+    inputDolar.value = formatValor(dolarExacto);
 
-    let solExacto = valorSol * inputDolar.value;
-    inputSol.value = solExacto;
+    let solExacto = valorSol * parseValor(inputDolar.value);
+    inputSol.value = formatValor(solExacto);
 });
 
 inputSol.addEventListener('input', (e) => {
-    let dolarExacto = inputSol.value / valorSol;
-    inputDolar.value = dolarExacto;
+    let dolarExacto = parseValor(inputSol.value) / valorSol;
+    inputDolar.value = formatValor(dolarExacto);
 
-    let bolivarExacto = valorBolivar * inputDolar.value;
-    inputBolivar.value = bolivarExacto;
+    let bolivarExacto = valorBolivar * parseValor(inputDolar.value);
+    inputBolivar.value = formatValor(bolivarExacto);
+
 });
