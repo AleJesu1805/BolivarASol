@@ -4,7 +4,6 @@ const inputSol = document.getElementById('sol');
 
 const contenedorScroll = document.getElementById('contenedorScroll');
 
-
 function parseValor(str) {
     if (typeof str !== 'string') str = String(str);
     const limpio = str.trim().replace(/\./g, '').replace(',', '.');
@@ -21,7 +20,7 @@ function formatValor(num) {
 }
 
 function resetear(num) {
-    inputDolar.value = num;
+    inputDolar.value = formatValor(num);
 
     let bolivarExacto = valorBolivar * num;
     inputBolivar.value = formatValor(bolivarExacto);
@@ -48,7 +47,7 @@ const bolivar = () => fetch('https://ve.dolarapi.com/v1/dolares/oficial')
     .then(res => res.json())
     .then(data => {
         const valor = data.promedio;
-        inputBolivar.value = valor;
+        inputBolivar.value = formatValor(valor);
         valorBolivar = valor;
     })
     .catch(err => console.error('Error:', err));
@@ -58,7 +57,7 @@ const sol = () => fetch('https://v6.exchangerate-api.com/v6/916af0932b27a81eeb3e
     .then(data => {
         let dato = data.conversion_rate;
         const valor = 1 / dato;
-        inputSol.value = valor;
+        inputSol.value = formatValor(valor);
         valorSol = valor;
     })
     .catch(err => console.error('Error:', err));
@@ -67,26 +66,35 @@ sol();
 bolivar();
 
 inputDolar.addEventListener('input', (e) => {
-    let bolivarExacto = valorBolivar * parseValor(inputDolar.value);
+    const dolarNum = parseValor(inputDolar.value);
+
+    let bolivarExacto = valorBolivar * dolarNum;
     inputBolivar.value = formatValor(bolivarExacto);
 
-    let solExacto = valorSol * parseValor(inputDolar.value);
+    let solExacto = valorSol * dolarNum;
     inputSol.value = formatValor(solExacto);
 });
 
 inputBolivar.addEventListener('input', (e) => {
-    let dolarExacto = parseValor(inputBolivar.value) / valorBolivar;
+    const bolivarNum = parseValor(inputBolivar.value);
+    let dolarExacto = bolivarNum / valorBolivar;
     inputDolar.value = formatValor(dolarExacto);
 
-    let solExacto = valorSol * parseValor(inputDolar.value);
+    let solExacto = valorSol * dolarExacto;
     inputSol.value = formatValor(solExacto);
 });
 
 inputSol.addEventListener('input', (e) => {
-    let dolarExacto = parseValor(inputSol.value) / valorSol;
+    const solNum = parseValor(inputSol.value);
+    let dolarExacto = solNum / valorSol;
     inputDolar.value = formatValor(dolarExacto);
 
-    let bolivarExacto = valorBolivar * parseValor(inputDolar.value);
+    let bolivarExacto = valorBolivar * dolarExacto;
     inputBolivar.value = formatValor(bolivarExacto);
+});
 
+[inputDolar, inputBolivar, inputSol].forEach((input) => {
+    input.addEventListener('blur', () => {
+        input.value = formatValor(parseValor(input.value));
+    });
 });
