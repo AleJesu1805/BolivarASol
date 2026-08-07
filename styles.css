@@ -3,31 +3,110 @@ body {
     margin: 0;
     padding: 0;
     background: #021d2c;
+    font-family: monospace;
 }
 
-.tabla {
-    width: 100%;
-    background-color: #1b6106ab;
-    table-layout: fixed;
+:root {
+    --tamanio: 10dvh;
 }
 
-.filas {
-    margin: 10px 0px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10%;
-}
-
-.filas td,
-.filas th {
-    width: 20%;
-    margin: 0%;
-    padding: 0%;
+.container-monedas {
+    display: grid;
     text-align: center;
 }
 
+input,
+span {
+    margin: 0;
+    padding: 0;
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 3px solid #1a0940;
+    filter: brightness(200%);
+    transition: filter .2s;
+}
+
+.inputs,
+.monedas {
+    margin: 3%;
+    padding: 10px;
+}
+
+.inputs {
+    position: absolute;
+    left: 0%;
+    /* background-color: #2cf908; */
+}
+
+.monedas {
+    position: absolute;
+    right: 0%;
+    /* background-color: #440540; */
+}
+
+.input,
+.moneda {
+    display: block;
+    margin: 0px 0px;
+    padding: 0;
+    border: 0;
+    height: var(--tamanio);
+    font-size: 3rem;
+    font-weight: 900;
+    background-color: transparent;
+}
+
 .input {
-    width: 90%;
+    width: calc(var(--tamanio)*3);
+    box-sizing: border-box;
+    border-bottom: 3px solid #1a0940;
+    filter: brightness(50%);
+}
+
+.moneda {
+    width: calc(var(--tamanio)*2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #57004d;
+    text-shadow: 0px 0px 5px #62050c;
+}
+
+.container-atajos {
+    position: absolute;
+    left: 50%;
+    top: calc((var(--tamanio) * 3) + 50px);
+    transform: translateX(-50%);
+    display: flex;
+}
+
+#contenedorScroll {
+    position: relative;
+    width: 90dvw;
+    height: calc(var(--tamanio)*1.5);
+    display: flex;
+    overflow-x: scroll;
+}
+
+.atajo {
+    padding: calc(var(--tamanio)/3.5);
+    font-size: 1.8rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
+    background-color: #5d120a;
+    color: #056232;
+    box-shadow: 0px 0px 15px #681622;
+    filter: brightness(90%);
+    border: none;
+    border-radius: 20px;
+    user-select: none;
+    display: inline;
+    margin: 10px 10px;
+    transition: filter .3s;
+}
+
+.atajo:active {
+    filter: brightness(150%);
 }

@@ -7,22 +7,36 @@
     <link rel="stylesheet" href="styles.css">
     <title>CONVERSION-MONEDA</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #021d2c;
+            font-family: monospace;
+        }
+    </style>
 </head>
 
 <body>
-    <table class="tabla" id="valoresActuales">
-        <tr class="filas">
-            <th>DOLARES</th>
-            <th>BOLIVARES</th>
-            <th>SOLES</th>
-        </tr>
-        <tr class="filas">
-            <td><input type="number" class="input" id="dolar" value="1"></td>
-            <td><input type="number" class="input" id="bolivar" value="0"></td>
-            <td><input type="number" class="input" id="sol" value="0"></td>
-        </tr>
-    </table>
-    <h3>HISTORIAL</h3>
+    <div class="container-monedas">
+        <div class="inputs">
+            <input type="text" class="input" id="dolar" value="1" inputmode="decimal" pattern="[0-9]">
+            <input type="text" class="input" id="bolivar" value="0" inputmode="decimal" pattern="[0-9]">
+            <input type="text" class="input" id="sol" value="0" inputmode="decimal" pattern="[0-9]">
+        </div>
+        <div class="monedas">
+            <span class="moneda">USDT</span>
+            <span class="moneda">BCV</span>
+            <span class="moneda">PEN</span>
+        </div>
+    </div>
+    <div class="container-atajos">
+        <div id="contenedorScroll">
+        </div>
+    </div>
+
+    <!-- <h3>HISTORIAL</h3>
     <table class="tabla" id="valoresAnteriores">
         <tr class="filas">
             <th>DOLAR</th>
@@ -34,7 +48,7 @@
             <td>0</td>
             <td>0</td>
         </tr>
-    </table>
+    </table> -->
     <script src="script.js"></script>
 </body>
 
