@@ -1,3 +1,7 @@
+if ('service worker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+}
+
 const inputDolar = document.getElementById('dolar');
 const inputBolivar = document.getElementById('bolivar');
 const inputSol = document.getElementById('sol');
