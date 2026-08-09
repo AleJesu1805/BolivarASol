@@ -1,0 +1,21 @@
+{
+  "short_name": "BsAPen",
+  "name": "BolivarASol",
+  "description": "conversor de monedas: bolivares-soles-dolares",
+  "dir": "auto",
+  "lang": "es",
+  "background_color": "#060316",
+  "theme_color": "#060316",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": ".",
+  "start_url": "index.html",
+  "icons": [
+    {
+      "src": "dolarIco.svg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
