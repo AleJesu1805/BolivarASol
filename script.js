@@ -53,8 +53,14 @@ const bolivar = () => fetch('https://ve.dolarapi.com/v1/dolares/oficial')
         const valor = data.promedio;
         inputBolivar.value = formatValor(valor);
         valorBolivar = valor;
+        localStorage.setItem('valorBsLocal', valor);
     })
-    .catch(err => console.error('Error:', err));
+    .catch((err) => {
+        console.error('Error:', err);
+        const valor = localStorage.getItem('valorBsLocal');
+        inputBolivar.value = formatValor(Number(valor));
+        valorBolivar = valor;
+    });
 
 const sol = () => fetch('https://v6.exchangerate-api.com/v6/916af0932b27a81eeb3ed6bd/pair/PEN/USD')
     .then(res => res.json())
@@ -63,8 +69,15 @@ const sol = () => fetch('https://v6.exchangerate-api.com/v6/916af0932b27a81eeb3e
         const valor = 1 / dato;
         inputSol.value = formatValor(valor);
         valorSol = valor;
+        localStorage.setItem('valorPenLocal', dato);
     })
-    .catch(err => console.error('Error:', err));
+    .catch((err) => {
+        console.error('Error:', err);
+        let dato = localStorage.getItem('valorPenLocal');
+        const valor = (1 / dato);
+        inputSol.value = formatValor(Number(valor));
+        valorSol = valor;
+    });
 
 sol();
 bolivar();
