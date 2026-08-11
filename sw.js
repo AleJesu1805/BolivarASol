@@ -1,5 +1,5 @@
 const CACHE_NAME = 'app-cache-v1';
-const APP_SHELL = ['/', '/index.html', '/styles.css', '/app.js'];
+const APP_SHELL = ['/', '/index.html', '/styles.css', '/script.js'];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
