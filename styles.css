@@ -79,6 +79,7 @@ input:focus {
     position: absolute;
     left: 50%;
     top: calc((var(--tamanio) * 3) + 50px);
+    margin-top: 3%;
     transform: translateX(-50%);
     display: flex;
 }
@@ -86,13 +87,14 @@ input:focus {
 #contenedorScroll {
     position: relative;
     width: 90dvw;
-    height: calc(var(--tamanio)*1.5);
+    height: calc(var(--tamanio)*2);
     display: flex;
     overflow-x: scroll;
 }
 
 #contenedorScroll::-webkit-scrollbar {
-    width: fit-content;
+    /* width: fit-content; */
+    height: 20px;
 }
 
 #contenedorScroll::-webkit-scrollbar-track {
@@ -127,4 +129,10 @@ input:focus {
 
 .atajo:active {
     filter: brightness(150%);
+}
+
+@media (min-width: 1210px) {
+    #contenedorScroll {
+        overflow: hidden;
+    }
 }

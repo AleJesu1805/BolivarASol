@@ -1,4 +1,4 @@
-if ('service worker' in navigator) {
+if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
 }
 
