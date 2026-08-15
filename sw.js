@@ -1,71 +1,127 @@
-const CACHE_NAME = 'app-cache-v1';
-// OJO: si tu PWA no vive en la raíz del dominio (ej: usuario.github.io/mi-repo/),
-// estas rutas absolutas van a dar 404. Usá rutas relativas al scope del SW:
-const APP_SHELL = ['./', './index.html', './styles.css', './script.js', './manifest.json', './dolarIco.svg'];
+const CACHE_NAME = 'bolivarASol-cache-v1';
+const descargasCompletasEnCurso = new Map();
 
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(async (cache) => {
-            // En vez de addAll (todo o nada), cacheamos uno por uno
-            // para poder ver exactamente cuál falla.
-            const results = await Promise.allSettled(
-                APP_SHELL.map((url) =>
-                    fetch(url).then((res) => {
-                        if (!res.ok) throw new Error(`${url} respondió ${res.status}`);
-                        return cache.put(url, res);
-                    })
-                )
-            );
-            results.forEach((r, i) => {
-                if (r.status === 'rejected') {
-                    console.error('[SW] No se pudo cachear', APP_SHELL[i], r.reason);
-                }
-            });
-        })
-    );
+self.addEventListener('install', () => {
     self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
+
     event.waitUntil(
-        caches.keys().then((keys) =>
-            Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-        )
+        caches.keys()
+            .then((nombresCache) =>
+                Promise.all(
+                    nombresCache
+                        .filter((nombre) => nombre !== CACHE_NAME)
+                        .map((nombre) => caches.delete(nombre))
+                )
+            )
+            .then(() => self.clients.claim())
     );
-    self.clients.claim();
 });
+
+async function obtenerVersionCompleta(url) {
+    const peticionCompleta = new Request(url, { method: 'GET' });
+
+    const enCache = await caches.match(peticionCompleta);
+    if (enCache) return enCache;
+
+    if (descargasCompletasEnCurso.has(url)) {
+        return descargasCompletasEnCurso.get(url);
+    }
+
+    const promesa = fetch(peticionCompleta)
+        .then(async (respuesta) => {
+            if (respuesta && respuesta.ok) {
+                const cache = await caches.open(CACHE_NAME);
+                cache.put(peticionCompleta, respuesta.clone());
+
+            }
+            return respuesta;
+        })
+        .finally(() => descargasCompletasEnCurso.delete(url));
+
+    descargasCompletasEnCurso.set(url, promesa);
+    return promesa;
+}
+
+async function recortarPorRango(respuestaCompleta, encabezadoRange) {
+    const buffer = await respuestaCompleta.clone().arrayBuffer();
+    const total = buffer.byteLength;
+
+    const coincidencia = /bytes=(\d*)-(\d*)/.exec(encabezadoRange || '');
+    let inicio = coincidencia && coincidencia[1] !== '' ? parseInt(coincidencia[1], 10) : null;
+    let fin = coincidencia && coincidencia[2] !== '' ? parseInt(coincidencia[2], 10) : null;
+
+    if (inicio === null && fin !== null) {
+
+        inicio = Math.max(total - fin, 0);
+        fin = total - 1;
+    } else {
+        if (inicio === null) inicio = 0;
+        if (fin === null || fin > total - 1) fin = total - 1;
+    }
+
+    const trozo = buffer.slice(inicio, fin + 1);
+
+    return new Response(trozo, {
+        status: 206,
+        statusText: 'Partial Content',
+        headers: {
+            'Content-Type': respuestaCompleta.headers.get('Content-Type') || 'application/octet-stream',
+            'Content-Range': `bytes ${inicio}-${fin}/${total}`,
+            'Content-Length': String(trozo.byteLength),
+            'Accept-Ranges': 'bytes'
+        }
+    });
+}
+
+async function servirPeticionPorRango(request) {
+    try {
+        const completa = await obtenerVersionCompleta(request.url);
+        if (!completa || !completa.ok) return completa;
+        return await recortarPorRango(completa, request.headers.get('range'));
+    } catch (error) {
+        console.warn('[SW] no se pudo servir por rango', request.url, error);
+        return undefined;
+    }
+}
 
 self.addEventListener('fetch', (event) => {
     const { request } = event;
 
-    // La página (navegación): red primero, caché como respaldo
-    if (request.mode === 'navigate') {
-        event.respondWith(
-            fetch(request)
-                .then((response) => {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-                    return response;
-                })
-                .catch(
-                    () =>
-                        caches.match(request).then((cached) => cached) ||
-                        caches.match('./index.html')
-                )
-        );
+    if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) {
         return;
     }
 
-    // Otros recursos estáticos (CSS, JS, imágenes): caché primero, actualiza en segundo plano
+    if (request.headers.has('range')) {
+        event.respondWith(servirPeticionPorRango(request));
+        return;
+    }
+
     event.respondWith(
-        caches.match(request).then((cached) => {
-            const fetchPromise = fetch(request)
-                .then((res) => {
-                    caches.open(CACHE_NAME).then((cache) => cache.put(request, res.clone()));
-                    return res;
+        fetch(request)
+            .then((respuestaRed) => {
+
+
+                if (respuestaRed && respuestaRed.ok) {
+                    const copia = respuestaRed.clone();
+                    caches.open(CACHE_NAME)
+                        .then((cache) => {
+                            cache.put(request, copia);
+
+                        })
+                        .catch((error) => console.warn('[SW] no se pudo cachear', request.url, error));
+                }
+                return respuestaRed;
+            })
+            .catch(() =>
+
+                caches.match(request).then((cacheado) => {
+                    if (cacheado) return cacheado;
+                    if (request.mode === 'navigate') return caches.match('./index.html');
+                    return undefined;
                 })
-                .catch(() => cached);
-            return cached || fetchPromise;
-        })
+            )
     );
 });
