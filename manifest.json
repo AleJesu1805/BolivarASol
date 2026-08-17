@@ -12,7 +12,7 @@
   "start_url": "index.html",
   "icons": [
     {
-      "src": "dolarIco.svg",
+      "src": "dolarIco.png",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
