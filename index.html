@@ -1,49 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" translate="no">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
     <title>CONVERSION-MONEDA</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="dolarIco.png" type="image/png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="google" content="notranslate">
-</head>
-
-<body>
+    <link rel="icon" href="assets/dolarIco.png" type="image/png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="google" content="notranslate" />
+  </head>
+  <body>
     <div class="container-monedas">
-        <div class="inputs">
-            <input type="text" class="input" id="dolar" value="1" inputmode="decimal" pattern="[0-9]">
-            <input type="text" class="input" id="bolivar" value="0" inputmode="decimal" pattern="[0-9]">
-            <input type="text" class="input" id="sol" value="0" inputmode="decimal" pattern="[0-9]">
-        </div>
-        <div class="monedas">
-            <span class="moneda">USDT</span>
-            <span class="moneda">BCV</span>
-            <span class="moneda">PEN</span>
-        </div>
+      <div class="inputs">
+        <input
+          type="text"
+          class="input"
+          id="dolar"
+          value="1"
+          inputmode="decimal"
+          pattern="[0-9]"
+        />
+        <input
+          type="text"
+          class="input"
+          id="bolivar"
+          value="0"
+          inputmode="decimal"
+          pattern="[0-9]"
+        />
+        <input
+          type="text"
+          class="input"
+          id="sol"
+          value="0"
+          inputmode="decimal"
+          pattern="[0-9]"
+        />
+      </div>
+      <div class="monedas">
+        <span class="moneda">USDT</span>
+        <span class="moneda">BCV</span>
+        <span class="moneda">PEN</span>
+      </div>
     </div>
     <div class="container-atajos">
-        <div id="contenedorScroll">
-        </div>
+      <div id="contenedorScroll"></div>
     </div>
 
-    <!-- <h3>HISTORIAL</h3>
-    <table class="tabla" id="valoresAnteriores">
-        <tr class="filas">
-            <th>DOLAR</th>
-            <th>BOLIVAR</th>
-            <th>SOL</th>
-        </tr>
-        <tr class="filas">
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-        </tr>
-    </table> -->
-    <script src="script.js"></script>
-</body>
-
+    <script type="module" src="js/script.js"></script>
+  </body>
 </html>
