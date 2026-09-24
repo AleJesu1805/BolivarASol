@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Grafika (https://www.grafika.cc/) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 605 869" preserveAspectRatio="xMidYMid meet">
+	<ellipse cx="303" cy="434" rx="293" ry="293" id="Elipse" style="fill:#4405A9;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:19;" />
+	<g id="Texto">
+		<path d="M282 627 Q247 626 213 621 Q180 615 160 606 L160 552 Q181 562 215 569 Q249 577 282 578 L282 449 Q219 432 189 405 Q160 379 160 334 Q160 287 193 260 Q226 233 282 230 L282 174 L322 174 L322 229 Q356 230 384 237 Q412 243 435 253 L418 300 Q397 292 373 286 Q348 280 322 278 L322 406 Q365 418 393 432 Q421 446 435 466 Q450 486 450 518 Q450 562 416 590 Q383 618 322 624 L322 695 L282 695 L282 627 L282 627 Z M282 279 Q247 282 231 295 Q215 308 215 330 Q215 355 229 369 Q243 383 282 392 L282 279 L282 279 Z M322 574 Q360 571 377 557 Q395 543 395 522 Q395 497 379 485 Q364 472 322 462 L322 574 L322 574 Z" fill="#000000" />
+	</g>
+	<g id="Texto 1">
+		<path d="" fill="#4405A9" fill-rule="evenodd" />
+	</g>
+</svg>
