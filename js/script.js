@@ -25,7 +25,7 @@ function createShortcuts() {
     const button = document.createElement("button");
     button.classList.add("atajo");
     button.type = "button";
-    button.dataset.amount = String(amount);
+    button.dataset.amount = String(amount * 5);
     button.textContent = `${amount * 5}$`;
     shortcutsContainer.appendChild(button);
   }
