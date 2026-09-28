@@ -1,138 +1,119 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
-    background: #060316;
-    font-family: monospace;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #071711;
+  color: #e6eee1;
+  font-family: "Trebuchet MS", sans-serif;
 }
 
 :root {
-    --tamanio: 10dvh;
+  --tamanio: clamp(64px, 10dvh, 88px);
 }
 
 .container-monedas {
-    display: grid;
-    text-align: center;
-}
-
-input,
-span {
-    margin: 0;
-    padding: 0;
-}
-
-input:focus {
-    outline: none;
-    border-bottom: 3px solid #89062b;
-    filter: brightness(150%);
-    transition: filter .2s;
+  width: min(88vw, 760px);
+  margin: 3vh auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
 }
 
 .inputs,
 .monedas {
-    margin: 3%;
-    padding: 10px;
-}
-
-.inputs {
-    position: absolute;
-    left: 0%;
-    /* background-color: #2cf908; */
-}
-
-.monedas {
-    position: absolute;
-    right: 0%;
-    /* background-color: #440540; */
+  display: grid;
+  grid-template-rows: repeat(3, var(--tamanio));
 }
 
 .input,
 .moneda {
-    display: block;
-    margin: 0px 0px;
-    padding: 0;
-    border: 0;
-    height: var(--tamanio);
-    font-size: 3rem;
-    font-weight: 900;
-    background-color: transparent;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid #294237;
+  background: transparent;
+  font-size: clamp(1.7rem, 5vw, 3rem);
+  font-weight: 700;
 }
 
 .input {
-    width: clamp(200px, 60dvw, 800px);
-    box-sizing: border-box;
-    border-bottom: 3px solid #732796;
-    filter: brightness(50%);
-    color: #67d4e5;
+  width: 100%;
+  color: #d5f17e;
+  text-align: left;
+  outline: none;
+}
+
+.input:focus {
+  border-bottom-color: #d5f17e;
+}
+
+.monedas {
+  min-width: 86px;
 }
 
 .moneda {
-    width: calc(var(--tamanio)*2);
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    color: #a12092;
-    text-shadow: 0px 0px 5px #881821;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-bottom: 0;
+  color: #82988a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
 }
 
 .container-atajos {
-    position: absolute;
-    left: 50%;
-    top: calc((var(--tamanio) * 3) + 50px);
-    margin-top: 3%;
-    transform: translateX(-50%);
-    display: flex;
+  width: min(88vw, 760px);
+  margin: 28px auto 0;
 }
 
 #contenedorScroll {
-    position: relative;
-    width: 90dvw;
-    height: calc(var(--tamanio)*2);
-    display: flex;
-    overflow-x: scroll;
-}
-
-#contenedorScroll::-webkit-scrollbar {
-    /* width: fit-content; */
-    height: 20px;
-}
-
-#contenedorScroll::-webkit-scrollbar-track {
-    background: #34022e;
-    border-radius: 8px;
-}
-
-#contenedorScroll::-webkit-scrollbar-thumb {
-    background: #744582;
-    border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scrollbar-color: #54735b transparent;
+  scrollbar-width: thin;
 }
 
 .atajo {
-    padding: calc(var(--tamanio)/3.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 700;
-    background-color: #094b06;
-    color: #91b072;
-    box-shadow: 0px 0px 15px #0c410d;
-    filter: brightness(90%);
-    border: none;
-    border-radius: 20px;
-    user-select: none;
-    display: flex;
-    margin: 10px 10px;
-    transition: filter .3s;
+  min-width: 78px;
+  min-height: 48px;
+  padding: 0 14px;
+  color: #c5d9bf;
+  background: #123523;
+  border: 1px solid #294237;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
-.atajo:active {
-    filter: brightness(150%);
+.atajo:hover,
+.atajo:focus-visible {
+  color: #102416;
+  background: #d5f17e;
+  outline: none;
 }
 
-@media (min-width: 1210px) {
-    #contenedorScroll {
-        overflow: hidden;
-    }
+@media (max-width: 480px) {
+  .container-monedas,
+  .container-atajos {
+    width: 90vw;
+  }
+
+  .container-monedas {
+    gap: 12px;
+  }
+
+  .monedas {
+    min-width: 64px;
+  }
 }

@@ -8,7 +8,7 @@ Tres campos (dólar, bolívar, sol) que se recalculan entre sí en tiempo real a
 
 ## Funcionamiento local (offline)
 
-- Al cargar la página, `script.js` pide la tasa BCV a `dolarapi.com` y la tasa PEN/USD a `exchangerate-api.com`.
+- Al cargar la página, los módulos `js/script.js` y `js/rates.js` piden la tasa BCV a `dolarapi.com` y la tasa PEN/USD a `exchangerate-api.com`.
 - Cada tasa obtenida se guarda en `localStorage` (`valorBsLocal`, `valorPenLocal`).
 - Si la petición falla (sin conexión), la app **no se rompe**: lee la última tasa guardada en `localStorage` y sigue operando con ese valor, aunque esté desactualizado.
 - La conversión en sí (cálculo entre los 3 campos) no depende de red en ningún momento: solo usa las tasas ya cargadas en memoria (`valorBolivar`, `valorSol`).
@@ -24,14 +24,16 @@ Tres campos (dólar, bolívar, sol) que se recalculan entre sí en tiempo real a
 ## Estructura
 
 ```
-index.html   → interfaz (inputs + atajos)
-styles.css   → tema oscuro
-script.js    → conversión + consumo de APIs + fallback local
-sw.js        → caché offline
-manifest.json → config PWA
+index.html       → interfaz y punto de entrada ES module
+css/styles.css   → tema oscuro
+js/script.js     → eventos de interfaz y registro del service worker
+js/currency.js   → parseo, formato y conversiones
+js/rates.js      → tasas remotas y fallback local
+sw.js            → caché offline
+manifest.json    → configuración PWA
 .github/workflows/static.yml → despliegue a GitHub Pages
 ```
 
 ## Uso local
 
-No requiere build: clona el repo y abre `index.html` en el navegador (o sírvelo con `npx serve`).
+No requiere build. Como el navegador bloquea módulos ES al abrir la página con `file://`, sirve el proyecto por HTTP, por ejemplo con `npx serve .`, y abre la URL local que indique el comando.
